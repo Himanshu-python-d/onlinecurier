@@ -1,0 +1,40 @@
+{% extends 'navigation.html' %}
+{% load static %}
+{% block body %}
+
+</script>
+
+<div class="container p-4" style="background-color:lightblue; font-family:Book Antiqua;">
+  <h2 class="text-center" style="font-weight:bold">Assign Status</h2>
+  <hr>
+  <form method="post">
+    {% csrf_token %}
+    <label>Parcel Id</label>
+    <input type="text" name="parcelid" value="{{data.id}}" class="form-control" readonly>
+
+    <label>Status</label>
+    <select class="form-control" name="status">
+      <option readonly>{{data.status}}</option>
+      <option value="Accept">Accept</option>
+      <option value="Reject">Reject</option>
+    </select><br>
+    <input type="submit" value="Submit" class="btn btn-success form-control">
+  </form>
+
+</div>
+
+{% ifequal error "no" %}
+<script>
+  alert('Status Updated Successfully');
+  window.location=('{% url 'all_accept_parcel' %}');
+</script>
+{% endifequal %}
+{% ifequal error "yes" %}
+<script>
+  alert('Something went wrong, Please try Again');
+</script>
+{% endifequal %}
+
+
+
+    {% endblock %}

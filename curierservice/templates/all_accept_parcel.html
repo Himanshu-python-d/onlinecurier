@@ -1,0 +1,53 @@
+{% extends 'navigation.html' %}
+{% load static %}
+{% block body %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" ></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<script>
+  $(document).ready(function() {
+    $('#table').DataTable();
+} );
+</script>
+  <!-- Start Table -->
+
+<div class="container-fluid p-4" style="background-color:lightblue">
+  <h2 class="text-center" style="font-family:papyrus;">Parcels List</h2>
+  <hr>
+
+  <table class="table table-bordered" id="table" style="font-family:Book Antiqua;">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Receiver Name</th>
+        <th>Services</th>
+        <th>Contact</th>
+        <th>From*(Delivery Address)</th>
+        <th>To*(Receiver Address)</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in product_list %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.receiver_name}}</td>
+        <td>{{i.delivery_service}}</td>
+        <td>{{i.rcontact}}</td>
+        <td>{{i.delivery_address}}</td>
+        <td>{{i.pick_up_address}}</td>
+        <td><a href="{% url 'assign_status' i.id %}" class="btn btn-info">{{i.status}}</a></td>
+        <td><a href="{% url 'edit_parcel' i.id %}" class="btn btn-secondary">Edit</a></td>
+        <td><a href="{% url 'delete_history' i.id %}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div><br><br><br>
+
+    {% endblock %}
